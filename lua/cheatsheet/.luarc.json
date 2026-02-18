@@ -1,0 +1,11 @@
+{
+    "diagnostics.globals": [
+        "listDirs",
+        "listDir",
+        "vim",
+        "openFile"
+    ],
+    "diagnostics.disable": [
+        "unused-local"
+    ]
+}
