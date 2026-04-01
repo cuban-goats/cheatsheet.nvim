@@ -13,7 +13,7 @@ Quickly access cheatsheets in nvim
 Example
 
 ```lua
-vim.cmd("split ~/Desktop/theorie/cheatsheets/cheatsheet.typ")
+vim.cmd("split ~/Desktop/./cheatsheets/cheatsheet.typ")
 
 ```
 
@@ -24,9 +24,9 @@ Example
 
 ```lua
 return {
-  dir = "~/Desktop/dev/nvimplugins/cheatsheet.nvim",
+  "cuban-goats/cheatsheet.nvim"
   opts = {
-    cheatDir = "/Users/I767435/Desktop/theorie/cheatsheets",
+    cheatDir = "/Users/./Desktop/./cheatsheets",
     preview = "false",
   }
 }
