@@ -27,7 +27,6 @@ return {
   "cuban-goats/cheatsheet.nvim"
   opts = {
     cheatDir = "/Users/./Desktop/./cheatsheets",
-    preview = "false",
   }
 }
 
