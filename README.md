@@ -12,12 +12,8 @@ Quickly access cheatsheets in nvim
 
 Example
 
-```lua
-vim.cmd("split ~/Desktop/./cheatsheets/cheatsheet.typ")
-
-```
-
 - set your Directory containing all of your cheatsheets in opts
+- set the default cheatsheet
 - example Opts
 
 Example
@@ -27,6 +23,7 @@ return {
   "cuban-goats/cheatsheet.nvim"
   opts = {
     cheatDir = "/Users/./Desktop/./cheatsheets",
+    default = "cheatsheet.typ"
   }
 }
 

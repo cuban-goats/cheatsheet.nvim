@@ -1,10 +1,3 @@
--- make a cheatsheet for typst
--- specify a cheatsheet dir in opts
--- specify a filename for a new or existing cheatsheet
--- create a new window that opens the file
--- opt to open with typst preview
--- make own preview of the cheatsheet folder
-
 local M = {
   buf = nil,
   win = nil,
@@ -37,7 +30,7 @@ function M.setup(opts)
     local fileList = createFilelist(opts)
     createShortcutList(opts, fileList)
     reopenMenu(opts, fileList)
-    openDefaultFile()
+    openDefaultFile(opts)
 
     if M.buf and api.nvim_buf_is_valid(M.buf) then
       on_attach(M.buf)
@@ -118,10 +111,12 @@ function createShortcutList(opts, fileList)
 end
 
 -- deprecated
-function openDefaultFile()
+function openDefaultFile(opts)
   keymap.set("n", "<leader>hs", function()
     closeWindow()
-    vim.cmd("split ~/Desktop/theorie/cheatsheets/cheatsheet.typ")
+    local defaultCmd = "split " .. opts.cheatDir .. "/" .. opts.default
+    print(defaultCmd)
+    vim.cmd(defaultCmd)
   end, { buffer = M.buf })
 end
 
