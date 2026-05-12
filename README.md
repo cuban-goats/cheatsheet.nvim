@@ -23,7 +23,9 @@ return {
   "cuban-goats/cheatsheet.nvim"
   opts = {
     cheatDir = "/Users/./Desktop/./cheatsheets",
-    default = "cheatsheet.typ"
+    default = "cheatsheet.typ",
+    width = 80,   -- optional, defaults to 40% of terminal width
+    height = 40,  -- optional, defaults to 60% of terminal height
   }
 }
 
