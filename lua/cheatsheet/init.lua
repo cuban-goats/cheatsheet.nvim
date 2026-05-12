@@ -21,7 +21,7 @@ local function createWindow(opts)
 	M.width = width - 2
 	local row = math.floor((vim.o.lines - height) / 2)
 	local col = math.floor((vim.o.columns - width) / 2)
-	local opts = {
+	local winOpts = {
 		relative = "editor",
 		width = width,
 		height = height,
@@ -31,7 +31,7 @@ local function createWindow(opts)
 		anchor = "NW",
 		border = "rounded",
 	}
-	M.win = api.nvim_open_win(M.buf, true, opts)
+	M.win = api.nvim_open_win(M.buf, true, winOpts)
 end
 
 local function separator()
@@ -61,16 +61,16 @@ local function menuBar(opts)
 	keymapMenu()
 end
 
-local function showMenu(configOpts, fileShortCuts)
+local function showMenu(configOpts, fileList)
 	menuBar(configOpts)
+	for i = 1, #fileList do
+		api.nvim_buf_set_lines(M.buf, -1, -1, false, { i .. ": " .. fileList[i] })
+	end
 end
 
-local function reopenMenu(configOpts, dirList)
+local function returnToMenu(configOpts, fileList)
 	keymap.set("n", "b", function()
-		menuBar(configOpts)
-		for i = 1, #dirList do
-			api.nvim_buf_set_lines(M.buf, -1, -1, false, { i .. ": " .. dirList[i] })
-		end
+		showMenu(configOpts, fileList)
 	end, { buffer = M.buf })
 end
 
@@ -105,7 +105,6 @@ end
 local function createShortcutList(opts, fileList)
 	local shortCutList = {}
 	for i = 1, #fileList do
-		api.nvim_buf_set_lines(M.buf, -1, -1, false, { i .. ": " .. fileList[i] })
 		table.insert(shortCutList, "<leader>" .. i)
 	end
 	openFile(opts, fileList, shortCutList)
@@ -115,7 +114,6 @@ local function openDefaultFile(opts)
 	keymap.set("n", "<leader>hs", function()
 		closeWindow()
 		local defaultCmd = "split " .. opts.cheatDir .. "/" .. opts.default
-		print(defaultCmd)
 		vim.cmd(defaultCmd)
 	end, { buffer = M.buf })
 end
@@ -155,11 +153,11 @@ function M.setup(opts)
 		end
 		createWindow(opts)
 		openNeoTree(opts)
-		showMenu(opts)
 
 		local fileList = createFilelist(opts)
+		showMenu(opts, fileList)
 		createShortcutList(opts, fileList)
-		reopenMenu(opts, fileList)
+		returnToMenu(opts, fileList)
 		openDefaultFile(opts)
 
 		if M.buf and api.nvim_buf_is_valid(M.buf) then
